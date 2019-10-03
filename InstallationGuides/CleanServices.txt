@@ -1,0 +1,28 @@
+chef-server-ctl stop
+chef-server-manage stop
+service puppetmaster stop
+service puppet-master stop
+service apache2 stop
+service nginx stop
+service mysql stop
+service postgresql stop
+service jenkins stop
+
+
+For Nagios
+
+apt remove --purge php* -y 
+apt install php7.0 -y
+apt remove --purge nginx apache2 postgresql* jenkins -y
+apt remove --purge mysql-server-core-5.7 mysql-server-5.7 mysql-server mysql-client mysql-client-5.7 apache2 -y
+apt autoremove -y
+rm -rf /var/lib/mysql*
+rm -rf /var/log/mysql/
+mkdir -p /etc/mysql/conf.d
+
+
+For Kubernetes Clean up
+
+apt remove --purge mysql-server-core-5.7 mysql-server-5.7 mysql-server mysql-client mysql-client-5.7 apache2 jenkins nginx
+docker rm `docker ps -a -q` -f
+docker rmi `docker images -q`
